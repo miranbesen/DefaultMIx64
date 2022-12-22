@@ -1,0 +1,14 @@
+!table
+!version 300
+!charset WindowsTurkish
+
+Definition Table
+  Type NATIVE Charset "WindowsTurkish"
+  Fields 2
+    Adi Char (50) ;
+    Soyadi Char (50) ;
+begin_metadata
+"\IsReadOnly" = "FALSE"
+"\MapInfo" = ""
+"\MapInfo\TableID" = "ca3651e6-81a9-4d90-96a5-908659f933d3"
+end_metadata

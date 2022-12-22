@@ -1,0 +1,25 @@
+!Workspace
+!Version  950
+!Charset WindowsTurkish
+Open Table "Iller" As Iller Interactive
+Map From Iller
+  Position (0.0416667,1.58333) Units "in"
+  Width 9.98333 Units "in" Height 4.525 Units "in" 
+Set Window FrontWindow() ScrollBars Off Autoscroll On Enhanced On Smooth Text Antialias Image High
+Set Map
+  CoordSys Earth Projection 3, 28, "m", 36, 25, 37.5, 40.5, 1003827.109999999986, -1183453.080000000075
+  Center (971624.403,291195.3863)
+  Zoom 977.6108878 Units "mi"
+  Preserve Zoom Display Zoom
+  Distance Units "mi" Area Units "sq mi" XY Units "m"
+Set Map
+  Layer 1
+    Display Graphic
+    Global Pen (1,2,0) Brush (2,16777215,16777215) Symbol (35,0,12) Line (1,2,0) Font ("Arial",0,9,0)
+    Label Line None Position Center Font ("Arial",0,9,0) Pen (1,2,0) 
+      With IL_ADI
+      Parallel On Auto On Overlap Off Duplicates On Offset 2
+      Visibility On
+Set Window FrontWindow() Printer
+ Name "MapInfo PDF Printer Version 2021" Orientation Portrait Copies 1
+ Papersize 9

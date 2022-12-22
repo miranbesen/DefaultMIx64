@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{740AB232-92A5-4A5F-9BE9-F4757B857109}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DefaultMIx64</RootNamespace>
+    <AssemblyName>DefaultMIx64</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>C:\Program Files\MapInfo\Professional\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MapInfo.Application">
+      <HintPath>C:\Program Files\MapInfo\Professional\MapInfo.Application.dll</HintPath>
+    </Reference>
+    <Reference Include="MapInfo.Controls">
+      <HintPath>C:\Program Files\MapInfo\Professional\MapInfo.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="MapInfo.Events">
+      <HintPath>C:\Program Files\MapInfo\Professional\MapInfo.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="MapInfo.StyleResources">
+      <HintPath>C:\Program Files\MapInfo\Professional\MapInfo.StyleResources.dll</HintPath>
+    </Reference>
+    <Reference Include="MapInfo.Types">
+      <HintPath>C:\Program Files\MapInfo\Professional\MapInfo.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="miadm">
+      <HintPath>C:\Program Files\MapInfo\Professional\miadm.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddMadenOcagi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddMadenOcagi.Designer.cs">
+      <DependentUpon>AddMadenOcagi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BuildingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuildingForm.Designer.cs">
+      <DependentUpon>BuildingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Collective.cs" />
+    <Compile Include="Entities\Kesisim.cs" />
+    <Compile Include="Entities\KesisimUzunluk.cs" />
+    <Compile Include="Entities\Maden_Ocagi.cs" />
+    <Compile Include="Entities\Nokta.cs" />
+    <Compile Include="Entities\DrawRegion.cs" />
+    <Compile Include="Entities\Sinir_Duvar.cs" />
+    <Compile Include="Helpers\CustomListItem.cs" />
+    <Compile Include="Helpers\CustomToolButtons.cs" />
+    <Compile Include="Helpers\DelegateCommand.cs" />
+    <Compile Include="Helpers\MapInfoClass.cs" />
+    <Compile Include="IlceGolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IlceGolForm.Designer.cs">
+      <DependentUpon>IlceGolForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IlcelerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IlcelerForm.Designer.cs">
+      <DependentUpon>IlcelerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IllerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IllerForm.Designer.cs">
+      <DependentUpon>IllerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ilPointForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ilPointForm.Designer.cs">
+      <DependentUpon>ilPointForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InfoListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InfoListForm.Designer.cs">
+      <DependentUpon>InfoListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InfoSinirDuvarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InfoSinirDuvarForm.Designer.cs">
+      <DependentUpon>InfoSinirDuvarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LineForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LineForm.Designer.cs">
+      <DependentUpon>LineForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MadenOcagiSorgulamaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MadenOcagiSorgulamaForm.Designer.cs">
+      <DependentUpon>MadenOcagiSorgulamaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PointForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PointForm.Designer.cs">
+      <DependentUpon>PointForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegionForm.Designer.cs">
+      <DependentUpon>RegionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SinirDuvarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SinirDuvarForm.Designer.cs">
+      <DependentUpon>SinirDuvarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SinirDuvarSorgulamaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SinirDuvarSorgulamaForm.Designer.cs">
+      <DependentUpon>SinirDuvarSorgulamaForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AddMadenOcagi.resx">
+      <DependentUpon>AddMadenOcagi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BuildingForm.resx">
+      <DependentUpon>BuildingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IlceGolForm.resx">
+      <DependentUpon>IlceGolForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IlcelerForm.resx">
+      <DependentUpon>IlcelerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IllerForm.resx">
+      <DependentUpon>IllerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ilPointForm.resx">
+      <DependentUpon>ilPointForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InfoListForm.resx">
+      <DependentUpon>InfoListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InfoSinirDuvarForm.resx">
+      <DependentUpon>InfoSinirDuvarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LineForm.resx">
+      <DependentUpon>LineForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MadenOcagiSorgulamaForm.resx">
+      <DependentUpon>MadenOcagiSorgulamaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PointForm.resx">
+      <DependentUpon>PointForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="RegionForm.resx">
+      <DependentUpon>RegionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SinirDuvarForm.resx">
+      <DependentUpon>SinirDuvarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SinirDuvarSorgulamaForm.resx">
+      <DependentUpon>SinirDuvarSorgulamaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="DefaultData\default.wor">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DefaultData\Iller.DAT">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DefaultData\Iller.ID">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DefaultData\Iller.IND">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DefaultData\Iller.MAP">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DefaultData\Iller.TAB">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Close_All_32.png" />
+    <Content Include="Resources\Close_Table_321.png" />
+    <Content Include="Resources\frame.png" />
+    <Content Include="Resources\freeline64.png" />
+    <Content Include="Resources\info_32.png" />
+    <None Include="Resources\map_point-256.png" />
+    <Content Include="Resources\openTable_16x16.png" />
+    <Content Include="Resources\openWorkspace_16x16.png" />
+    <Content Include="Resources\Pan_322.png" />
+    <Content Include="Resources\plus24.png" />
+    <Content Include="Resources\Select_324.png" />
+    <Content Include="Resources\ZoomInBlue32.png" />
+    <Content Include="Resources\ZoomOutBlue32.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

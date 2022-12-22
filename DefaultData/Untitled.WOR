@@ -1,0 +1,9 @@
+!Workspace
+!Version 1900
+!Charset WindowsTurkish
+Open Table "C:\Program Files\MapInfo\Professional\DefaultData\Iller" As Iller Interactive
+Open Table "C:\Program Files\MapInfo\Professional\DefaultData\TEST" As TEST Interactive
+Open Table "C:\Program Files\MapInfo\Professional\DefaultData\Point2" As Point2 Interactive
+Open Table "C:\Program Files\MapInfo\Professional\DefaultData\Point3" As Point3 Interactive
+Select CentroidX ( obj ) as "XX" , CentroidY ( obj ) as "YY"  from test  where Adi = "1"  into SelectionSSSS noselect  
+Select IL_ADI  from Iller , Point3  where Iller . IL_ADI = Point3 . Il_Adi  into Selection1 noselect  
