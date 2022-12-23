@@ -82,7 +82,7 @@ namespace DefaultMIx64.Core
 
             try
             {
-                ObjeOlustur(2);
+                MapInfoClass.Instance.Do("dim o2 as object");
                 maden_Ocagi.Id = Convert.ToInt32(rowid);
                 MapInfoClass.Instance.Do("select * from Maden_Ocagi where rowid=" + rowid + " into secim noselect"); //objeyi secim tablosuna atadık
                 MapInfoClass.Instance.Do("o=secim.obj");
@@ -184,7 +184,7 @@ namespace DefaultMIx64.Core
             try
             {
                 Sinir_Duvar sinir_Duvar = new Sinir_Duvar();
-                ObjeOlustur(2);
+                MapInfoClass.Instance.Do("dim o2 as object");
                 sinir_Duvar.Id = Convert.ToInt32(rowid);
                 MapInfoClass.Instance.Do("select * from Sinir_Duvar where rowid=" + rowid + " into secim noselect");
                 MapInfoClass.Instance.Do("o=secim.obj");

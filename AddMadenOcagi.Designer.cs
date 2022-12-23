@@ -167,6 +167,7 @@
             this.Controls.Add(this.textSirketAdi);
             this.Name = "AddMadenOcagi";
             this.Text = "AddMadenOcagi";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddMadenOcagi_FormClosing);
             this.Load += new System.EventHandler(this.AddMadenOcagi_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

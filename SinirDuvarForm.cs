@@ -120,7 +120,12 @@ namespace DefaultMIx64
                 KesisimUzunluk selectedListBoxItem = listBox1.Items[i] as KesisimUzunluk; //LİSTBOX1'DE İTEMİMİZİ SEÇTİK.
                 collective.AddPointShowObjectLayer(selectedListBoxItem.Kesisen_Merkez_Nokta);
             }
-            collective.ZoomToShowLayer(windowId);
+
+        }
+
+        private void SinirDuvarForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            collective.ClearShowObjectLayer();
         }
     }
 }

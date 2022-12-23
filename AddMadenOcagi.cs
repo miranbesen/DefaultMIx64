@@ -65,6 +65,11 @@ namespace DefaultMIx64
 
         }
 
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
+
         private void btnRegionSave_Click(object sender, EventArgs e)
         {
             if (textSirketAdi.TextLength <= 0)
@@ -150,6 +155,11 @@ namespace DefaultMIx64
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void AddMadenOcagi_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            collective.ClearShowObjectLayer();
         }
     }
 }

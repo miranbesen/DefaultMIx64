@@ -165,6 +165,7 @@
             this.Controls.Add(this.textSinirDuvarAdi);
             this.Name = "SinirDuvarForm";
             this.Text = "SinirDuvarForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SinirDuvarForm_FormClosing);
             this.Load += new System.EventHandler(this.SinirDuvarForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

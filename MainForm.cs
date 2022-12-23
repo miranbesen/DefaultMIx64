@@ -357,9 +357,6 @@ namespace DefaultMIx64
             form.Show();
         }
 
-        private void btnSinirDuvarInfo_Click(object sender, EventArgs e)
-        {
-            CustomToolButtons.Instance.GetCustomTool(CustomToolButtons.ButtonName.GetSinirDuvarInfo);
-        }
+     
     }
 }

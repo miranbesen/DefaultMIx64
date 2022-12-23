@@ -39,7 +39,7 @@ namespace DefaultMIx64
                         if (selected.Text5 == "Point")
                         {
                             PointForm pointForm = new PointForm();
-                            pointForm.IsUpdate = false;
+                            pointForm.IsUpdate = true;
                             pointForm.rowID = selected.Text4;
                             string query = "select Il_Adi from Point where rowid =" + Convert.ToInt32(selected.Text4) + " into secim";
                             MapInfoClass.Instance.Do(query);
@@ -56,22 +56,25 @@ namespace DefaultMIx64
                         {
                             DrawRegion region = new DrawRegion();
                             MapInfoClass.Instance.Do("dim o as object");
+                            MapInfoClass.Instance.Do("Select obj from Region where rowid=" + selected.Text4 + "into selectRegion");
+                            MapInfoClass.Instance.Do("o=selectRegion.obj");
                             region = collective.Region(selected.Text4, "VeriCekme");
                             RegionForm regionForm = new RegionForm();
-                            regionForm.IsUpdate = false;
+                            regionForm.IsUpdate = true;
                             regionForm.rowID = selected.Text4;
                             regionForm.region = region;
                             DialogResult dialogResult = regionForm.ShowDialog();
 
                             if (dialogResult != DialogResult.OK)
                             {
-                                MapInfoClass.Instance.Do("rollback table point");
+                                MapInfoClass.Instance.Do("rollback table Region");
                             }
                             MapInfoClass.Instance.Do("undim o");
                         }
                         else if (selected.Text5 == "Maden_Ocagi")
                         {
                             Maden_Ocagi maden_Ocagi = new Maden_Ocagi();
+                            MapInfoClass.Instance.Do("dim o as object");
                             maden_Ocagi = collective.MadenOcagiOlustur(selected.Text4, "VeriCekme");
 
                             AddMadenOcagi madenOcagiForm = new AddMadenOcagi();
@@ -89,10 +92,11 @@ namespace DefaultMIx64
 
                         else if (selected.Text5 == "Sinir_Duvar")
                         {
-                            Sinir_Duvar sinir_Duvar= new Sinir_Duvar();
-                            sinir_Duvar= collective.SinirDuvarOlustur(selected.Text4, "VeriCekme");
+                            Sinir_Duvar sinir_Duvar = new Sinir_Duvar();
+                            MapInfoClass.Instance.Do("dim o as object");
+                            sinir_Duvar = collective.SinirDuvarOlustur(selected.Text4, "VeriCekme");
                             SinirDuvarForm sinirDuvarForm = new SinirDuvarForm();
-                            sinirDuvarForm.IsUpdate = false;
+                            sinirDuvarForm.IsUpdate = true;
                             sinirDuvarForm.rowID = selected.Text4;
                             sinirDuvarForm.sinir_duvar = sinir_Duvar;
                             DialogResult dialogResult = sinirDuvarForm.ShowDialog();

@@ -38,7 +38,6 @@
             this.btnCloseAllTable = new System.Windows.Forms.Button();
             this.btnOpenTable = new System.Windows.Forms.Button();
             this.tabMapTools = new System.Windows.Forms.TabPage();
-            this.btnSinirDuvarInfo = new System.Windows.Forms.Button();
             this.btnInfo = new System.Windows.Forms.Button();
             this.btnPan = new System.Windows.Forms.Button();
             this.btnZoomOut = new System.Windows.Forms.Button();
@@ -187,7 +186,6 @@
             // 
             // tabMapTools
             // 
-            this.tabMapTools.Controls.Add(this.btnSinirDuvarInfo);
             this.tabMapTools.Controls.Add(this.btnInfo);
             this.tabMapTools.Controls.Add(this.btnPan);
             this.tabMapTools.Controls.Add(this.btnZoomOut);
@@ -201,22 +199,6 @@
             this.tabMapTools.TabIndex = 1;
             this.tabMapTools.Text = "Harita Araçları";
             this.tabMapTools.UseVisualStyleBackColor = true;
-            // 
-            // btnSinirDuvarInfo
-            // 
-            this.btnSinirDuvarInfo.BackColor = System.Drawing.Color.Transparent;
-            this.btnSinirDuvarInfo.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnSinirDuvarInfo.Image = ((System.Drawing.Image)(resources.GetObject("btnSinirDuvarInfo.Image")));
-            this.btnSinirDuvarInfo.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnSinirDuvarInfo.Location = new System.Drawing.Point(649, 7);
-            this.btnSinirDuvarInfo.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSinirDuvarInfo.Name = "btnSinirDuvarInfo";
-            this.btnSinirDuvarInfo.Size = new System.Drawing.Size(116, 69);
-            this.btnSinirDuvarInfo.TabIndex = 6;
-            this.btnSinirDuvarInfo.Text = "Sinir Duvar Bilgi";
-            this.btnSinirDuvarInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnSinirDuvarInfo.UseVisualStyleBackColor = false;
-            this.btnSinirDuvarInfo.Click += new System.EventHandler(this.btnSinirDuvarInfo_Click);
             // 
             // btnInfo
             // 
@@ -573,7 +555,6 @@
         private System.Windows.Forms.Button btnDrawMadenOcagi;
         private System.Windows.Forms.Button btnDrawDuvar;
         private System.Windows.Forms.Button btnSinirDuvarSorgula;
-        private System.Windows.Forms.Button btnSinirDuvarInfo;
     }
 }
 

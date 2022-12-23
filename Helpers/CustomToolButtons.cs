@@ -90,7 +90,6 @@ namespace DefaultMIx64.Helpers
             this._mainForm = mainForm;
 
             LoadCustomToolButton(ButtonName.GetInfo, GetInfo, null, DrawingModeDef.DM_CUSTOM_POINT, (int)IconDef.MI_CURSOR_HELP);
-            LoadCustomToolButton(ButtonName.GetSinirDuvarInfo, GetSinirDuvarInfo, null, DrawingModeDef.DM_CUSTOM_POINT, (int)IconDef.MI_CURSOR_HELP);
             LoadCustomToolButton(ButtonName.AddPoint, AddPoint, null, DrawingModeDef.DM_CUSTOM_POINT, (int)IconDef.MI_CURSOR_ARROW);
             LoadCustomToolButton(ButtonName.AddLine, AddLine, null, DrawingModeDef.DM_CUSTOM_LINE, (int)IconDef.MI_CURSOR_ARROW);
             LoadCustomToolButton(ButtonName.AddPolygon, AddRegion, null, DrawingModeDef.DM_CUSTOM_POLYGON, (int)IconDef.MI_CURSOR_ARROW);
@@ -254,66 +253,21 @@ namespace DefaultMIx64.Helpers
             }
         }
 
-        public void GetSinirDuvarInfo(object param)
-        {
-            Sinir_Duvar sinir_Duvar = new Sinir_Duvar();
-            try
-            {
-                string tableName, rowID;
-                string x = MapInfoClass.Instance.Eval("commandinfo(1)").Replace(',', '.'); //Haritada tıklanılan yerin 'x' değerini getirir.
-                string y = MapInfoClass.Instance.Eval("commandinfo(2)").Replace(',', '.'); //Haritada tıklanılan yerin 'y' değerini getirir.
-                MainForm anaform = new MainForm();
-                int dataCount = Convert.ToInt32(MapInfoClass.Instance.Eval("SearchPoint(frontwindow()," + x + "," + y + ")"));
-                if (dataCount > 0)//tıklanılan yerde tablo var ise
-                {
-                    string _tableName = string.Empty;
-                    for (int i = 1; i <= dataCount; i++)
-                    {
-                        tableName = MapInfoClass.Instance.Eval("SearchInfo(" + i.ToString() + ",1)");
-                        rowID = MapInfoClass.Instance.Eval("SearchInfo(" + i.ToString() + ",2)");
-                        MapInfoClass.Instance.Do("Fetch rec " + rowID + " From " + tableName);
-                        if ((!tableName.StartsWith("sel")))// Haritada sel ile baslayan gecici tabloları dikkate alma
-                        {
-                            if (tableName == "Sinir_Duvar")
-                            {
-                                sinir_Duvar.Id = Convert.ToInt32(MapInfoClass.Instance.Eval(tableName + ".Id"));
-                                sinir_Duvar = collective.SinirDuvarOlustur(sinir_Duvar.Id.ToString(), "VeriCekme");
-                                string query = "select Sinir_Adi from Sinir_Duvar where Id=" + sinir_Duvar.Id + "into secimSinirAdi noselect";
-                                MapInfoClass.Instance.Do(query);
-                                sinir_Duvar.Sinir_Adi = MapInfoClass.Instance.Eval("secimSinirAdi.Sinir_Adi");
-                                InfoSinirDuvarForm ınfoSinirDuvarForm = new InfoSinirDuvarForm();
-                                ınfoSinirDuvarForm.listBox1.Items.Clear();
-                                ınfoSinirDuvarForm.listBox1.Items.Add(sinir_Duvar);
-                                //ınfoSinirDuvarForm.sinir_Duvar = sinir_Duvar;
-                                DialogResult dialogResult = ınfoSinirDuvarForm.ShowDialog();
-                                if (dialogResult != DialogResult.OK)
-                                {
-                                    MapInfoClass.Instance.Do("rollback table Sinir_Duvar");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Beklenmeyen bir hata oluştu");
-            }
-        }
 
         public void AddPoint(object param)
         {
             string ilAdı;
             MapInfoClass.Instance.Do("dim o as object");
             MapInfoClass.Instance.Do("o = CreatePoint(commandinfo(1),commandinfo(2))");
-            MapInfoClass.Instance.Do("insert into Point(obj) values (o) ");
             MapInfoClass.Instance.Do("select il_adi from iller where obj intersects o into kesisenil");
             string kesisenCount = MapInfoClass.Instance.Eval("tableinfo(kesisenil, 8)");
-            MapInfoClass.Instance.Do("fetch last from Point");
-            var rowid = MapInfoClass.Instance.Eval("Point.rowid");
-            ilAdı = MapInfoClass.Instance.Eval("kesisenil.IL_ADI");
+
             if (kesisenCount != "0")
             {
+                MapInfoClass.Instance.Do("insert into Point(obj) values (o) ");
+                MapInfoClass.Instance.Do("fetch last from Point");
+                var rowid = MapInfoClass.Instance.Eval("Point.rowid");
+                ilAdı = MapInfoClass.Instance.Eval("kesisenil.IL_ADI");
                 MapInfoClass.Instance.Do("update Point set Id=\"" + rowid + "\", Il_Adi=\"" + ilAdı + "\" where rowid=" + rowid);
                 MapInfoClass.Instance.Do("select * from Point where rowid=" + rowid + " into secim");
                 MapInfoClass.Instance.Do("o=secim.obj");
@@ -334,7 +288,7 @@ namespace DefaultMIx64.Helpers
             }
             else
             {
-
+                MapInfoClass.Instance.Do("undim o");
                 MessageBox.Show("Tabloda kesisen eleman yoktur.");
             }
 
@@ -368,24 +322,39 @@ namespace DefaultMIx64.Helpers
         {
             Sinir_Duvar sinir_Duvar = new Sinir_Duvar();
 
-
-            MapInfoClass.Instance.Do("insert into Sinir_Duvar(obj) values (commandinfo(1))");
-            MapInfoClass.Instance.Do("fetch last from Sinir_Duvar");
-            var rowid = MapInfoClass.Instance.Eval("Sinir_Duvar.rowid");
-            sinir_Duvar = collective.SinirDuvarOlustur(rowid, "Add");
-
-            SinirDuvarForm sinirDuvarForm = new SinirDuvarForm();
-            sinirDuvarForm.IsUpdate = false;
-            sinirDuvarForm.rowID = rowid;
-            sinirDuvarForm.sinir_duvar = sinir_Duvar;
-            DialogResult dialogResult = sinirDuvarForm.ShowDialog();
-
-            if (dialogResult != DialogResult.OK)
+            MapInfoClass.Instance.Do("dim o as object");
+            MapInfoClass.Instance.Do("o = commandinfo(1)");
+            string query3 = "select IL_ADI,ObjectLen(Overlap(obj, o), " + '"' + "m" + '"' + ") AS " + "\"" + "UZUNLUK" + "\" from iller where obj intersects o into kesisenIl"; //Kesisenil tablosuna oluşturmuş olduğumuz region ile kesisen illerin alanı ve adını ekliyoruz.
+            MapInfoClass.Instance.Do(query3);
+            int kesisenIlCount = Convert.ToInt32(MapInfoClass.Instance.Eval("tableinfo(kesisenil, 8)"));
+            if (kesisenIlCount != 0)
             {
-                MapInfoClass.Instance.Do("rollback table Sinir_Duvar");
+                MapInfoClass.Instance.Do("insert into Sinir_Duvar(obj) values (commandinfo(1))");
+                MapInfoClass.Instance.Do("fetch last from Sinir_Duvar");
+                var rowid = MapInfoClass.Instance.Eval("Sinir_Duvar.rowid");
+                sinir_Duvar = collective.SinirDuvarOlustur(rowid, "Add");
+
+                SinirDuvarForm sinirDuvarForm = new SinirDuvarForm();
+                sinirDuvarForm.IsUpdate = false;
+                sinirDuvarForm.rowID = rowid;
+                sinirDuvarForm.sinir_duvar = sinir_Duvar;
+                DialogResult dialogResult = sinirDuvarForm.ShowDialog();
+
+                if (dialogResult != DialogResult.OK)
+                {
+                    MapInfoClass.Instance.Do("rollback table Sinir_Duvar");
+                }
+
+                MapInfoClass.Instance.Do("undim o");
+                MapInfoClass.Instance.Do("undim o2");
+
+            }
+            else
+            {
+                MapInfoClass.Instance.Do("undim o");
+                MessageBox.Show("HARİTADA KESİSEN ELEMAN YOKTUR.");
             }
 
-            collective.ObjeSil(2);//2 tane oluşturuyor SinirDuvarOlustur içinde.
 
         }
 
@@ -397,44 +366,76 @@ namespace DefaultMIx64.Helpers
         public void AddMadenOcagi(object param)
         {
             Maden_Ocagi maden_Ocagi = new Maden_Ocagi();
-            MapInfoClass.Instance.Do("insert into Maden_Ocagi(obj) values (commandinfo(1)) "); //maden ocagi tablosuna region ekliyoruz
-            MapInfoClass.Instance.Do("fetch last from Maden_Ocagi"); //rowid için yazdık.
-            var rowid = MapInfoClass.Instance.Eval("Maden_Ocagi.rowid");
-            maden_Ocagi = collective.MadenOcagiOlustur(rowid, "Add"); //Maden ocagi class'ının bilgilerini dolduruyoruz.
+            MapInfoClass.Instance.Do("dim o as object");
+            MapInfoClass.Instance.Do("o = commandinfo(1)");
 
-            AddMadenOcagi madenOcagiForm = new AddMadenOcagi(); //madenocagi class'ına erişiyoruz.
-            madenOcagiForm.maden_Ocagi = maden_Ocagi; //maden_ocagi class'ına maden_ocagimizi yolluyoruz.
-            madenOcagiForm.rowID = rowid;
-
-            madenOcagiForm.IsUpdate = false; //Delete butonu pasifligi için false yolladık.
-
-            DialogResult dialogResult = madenOcagiForm.ShowDialog(); //madenocagiformunu gösterdik.
-
-            if (dialogResult != DialogResult.OK)
+           
+            string query3 = "select IL_ADI,AREA(Overlap(obj, o), " + '"' + "sq km" + '"' + ") AS " + "\"" + "ALAN" + "\" from iller where obj intersects o into kesisenIl"; //Kesisenil tablosuna oluşturmuş olduğumuz region ile kesisen illerin alanı ve adını ekliyoruz.
+            MapInfoClass.Instance.Do(query3);
+            string kesisenIlCount = MapInfoClass.Instance.Eval("tableinfo(kesisenIl, 8)"); //Kesisen il sayısını öğrendik.
+            if (kesisenIlCount != "0")
             {
-                MapInfoClass.Instance.Do("rollback table Maden_Ocagi");
+                MapInfoClass.Instance.Do("insert into Maden_Ocagi(obj) values (commandinfo(1)) "); //maden ocagi tablosuna region ekliyoruz
+                MapInfoClass.Instance.Do("fetch last from Maden_Ocagi"); //rowid için yazdık.
+                var rowid = MapInfoClass.Instance.Eval("Maden_Ocagi.rowid");
+                maden_Ocagi = collective.MadenOcagiOlustur(rowid, "Add"); //Maden ocagi class'ının bilgilerini dolduruyoruz.
+
+                AddMadenOcagi madenOcagiForm = new AddMadenOcagi(); //madenocagi class'ına erişiyoruz.
+                madenOcagiForm.maden_Ocagi = maden_Ocagi; //maden_ocagi class'ına maden_ocagimizi yolluyoruz.
+                madenOcagiForm.rowID = rowid;
+
+                madenOcagiForm.IsUpdate = false; //Delete butonu pasifligi için false yolladık.
+
+                DialogResult dialogResult = madenOcagiForm.ShowDialog(); //madenocagiformunu gösterdik.
+
+                if (dialogResult != DialogResult.OK)
+                {
+                    MapInfoClass.Instance.Do("rollback table Maden_Ocagi");
+                }
+               
+                MapInfoClass.Instance.Do("undim o");
+                MapInfoClass.Instance.Do("undim o2");
             }
-            collective.ObjeSil(2); //2 tane oluşturuyor MadenOcagiOlustur içinde.
+            else
+            {
+                MapInfoClass.Instance.Do("undim o");
+                MessageBox.Show("HARİTADA KESİSEN ELEMAN YOKTUR.");
+            }
+
         }
 
         public void AddRegion(object param)
         {
             DrawRegion region = new DrawRegion();
             MapInfoClass.Instance.Do("dim o as object");
-            MapInfoClass.Instance.Do("insert into Region(obj) values (commandinfo(1)) ");
-            MapInfoClass.Instance.Do("fetch last from Region");
-            var rowid = MapInfoClass.Instance.Eval("region.rowid");
-            region = collective.Region(rowid, "Add");
-
-            RegionForm regionForm = new RegionForm();
-            regionForm.IsUpdate = false;
-            regionForm.rowID = rowid;
-            regionForm.region = region;
-            DialogResult dialogResult = regionForm.ShowDialog();
-
-            if (dialogResult != DialogResult.OK)
+            MapInfoClass.Instance.Do("o = commandinfo(1)");
+            MapInfoClass.Instance.Do("select il_adi from iller where obj intersects o into kesisenil");
+            string kesisenCount = MapInfoClass.Instance.Eval("tableinfo(kesisenil, 8)");
+            if (kesisenCount != "0")
             {
-                MapInfoClass.Instance.Do("rollback table point");
+
+
+                MapInfoClass.Instance.Do("insert into Region(obj) values (commandinfo(1)) ");
+                MapInfoClass.Instance.Do("fetch last from Region");
+                var rowid = MapInfoClass.Instance.Eval("region.rowid");
+                region = collective.Region(rowid, "Add");
+
+                RegionForm regionForm = new RegionForm();
+                regionForm.IsUpdate = false;
+                regionForm.rowID = rowid;
+                regionForm.region = region;
+                DialogResult dialogResult = regionForm.ShowDialog();
+
+                if (dialogResult != DialogResult.OK)
+                {
+                    MapInfoClass.Instance.Do("rollback table region");
+                }
+
+
+            }
+            else
+            {
+                MessageBox.Show("HARİTADA KESİSEN ELEMAN YOKTUR.");
             }
             MapInfoClass.Instance.Do("undim o");
 
